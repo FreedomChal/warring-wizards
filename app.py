@@ -292,6 +292,10 @@ def player_event_attack(json):
 
     current_player.attack_player(victim)
 
+    data = victim.get_broadcasting_data()
+
+    emit('update_players', broadcast_data, room = game_id)
+
 @socketio.on('upgrade')
 def player_event_upgrade(json):
 
