@@ -1,0 +1,20 @@
+{% extends "parentlayout.html" %}
+
+{% block headers %}
+    <title>
+        Warring Wizards: {% block title %}{% endblock %}
+    </title>
+{% endblock %}
+
+{% block parent_body %}
+    <body class="login_body">
+        {% block body %}
+        {% endblock %}
+
+        {% if invalid %}
+            <div class="error_message">
+                Invalid Username or Password
+            </div>
+        {% endif %}
+    </body>
+{% endblock %}

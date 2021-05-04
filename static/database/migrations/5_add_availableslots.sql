@@ -1,0 +1,2 @@
+ALTER TABLE games
+ADD COLUMN available_slots INTEGER DEFAULT 0;

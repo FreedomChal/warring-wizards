@@ -1,0 +1,29 @@
+{% extends "layoutmainpages.html" %}
+
+{% block title %}
+    Create Game
+{% endblock %}
+
+{% block body %}
+    <h1>
+        Create Game
+    </h1>
+    <div class="centered">
+        <form action="/create_game", method="post">
+            <div>
+                <input type="number" name="number_of_players" placeholder="Number of Players" required>
+            </div>
+            <div>
+                <input type="number" name="waiting_time" placeholder="Waiting Time (in seconds)" required>
+            </div>
+            <div>
+                <input type="submit" value="Create Game">
+            </div>
+        </form>
+        {% if invalid %}
+            <div class="error_message">
+                Invalid Values. Either there were values omitted, or there were fewer than two players.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

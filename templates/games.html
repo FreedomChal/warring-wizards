@@ -1,0 +1,45 @@
+{% extends "layoutmainpages.html" %}
+
+{% block title %}
+    Games
+{% endblock %}
+
+{% block body %}
+    <h1>
+        Available Games
+    </h1>
+    <div class="centered">
+        {% for game in games %}
+            <h3>
+                Joinable Game
+            </h3>
+            <div>
+                <div>
+                    Host: {{ game.game_creator.get_username() }}
+                </div>
+                <div>
+                    Available Slots: {{ game.available_slots }}
+                </div>
+            </div>
+            <div>
+                <form method="post">
+                    <div>
+                        <input type="hidden" name="game_id" value="{{ game.id }}" />
+                        <input type="submit" value="Join Game">
+                    </div>
+                </form>
+            </div>
+        {% endfor %}
+        <div>
+            {% if current_user.get_can_create_games() == True %}
+                <h2>
+                    <a href="/create_game">Create Game</a>
+                </h2>
+            {% else %}
+                <h3>
+                    You do not have permission to create games
+                </h3>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,2 @@
+ALTER TABLE games
+ADD COLUMN can_join INTEGER;

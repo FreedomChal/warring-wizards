@@ -1,0 +1,68 @@
+{% extends "layoutmainpages.html" %}
+
+{% block title %}
+    About
+{% endblock %}
+
+{% block body %}
+  <div>
+    <p>
+      Warring wizards is an online combat clicker game, in which each player
+      uses their magical energy and coins, which increase over time,
+      to improve their strength and destroy their enemies.
+    </p>
+    <h3>
+      Each player has 6 main stats:
+    </h3>
+    <ul>
+      <li>HP</li>
+      <li>Max HP</li>
+      <li>Healing Rate</li>
+      <li>Armor</li>
+      <li>Attack Strength</li>
+      <li>Income</li>
+    </ul>
+    <div>
+      <p>
+        HP is Health Points. If you lose all your HP, you die.
+      </p>
+      <p>
+        Max HP is the maximum amount of HP you can heal.
+      </p>
+      <p>
+        Healing Rate is the amount of HP you heal per minute.
+      </p>
+      <p>
+        Armor is a form of protection which reduces your HP loss when you are attacked.
+        Damage you take is divided by Armor (eg. 2 armor will half the amount of damage you take).
+      </p>
+      <p>
+        Attack strength is the amount of attack damage you do for each unit of Energy used.
+      </p>
+      <p>
+        Income is the amount of coins you receive per minute.
+      </p>
+    </div>
+      <h3>
+        Also, each player has two constantly increasing stats: Coins and Energy
+      </h3>
+    <div>
+      <p>
+        Coins are the currency used to purchase upgrades. It grows at a rate of income per minute.
+      </p>
+      <p>
+        Energy is your magical energy, used for offensive magic.
+        Over time, the rate at which it increases will increase, independent of stats you purchase with coins.
+        Using your energy will make it grow faster, but using the energy also depletes it.
+      </p>
+    </div>
+    <p>
+      For 5 Coins, you can upgrade one of your stats.
+    </p>
+    <p>
+      Later, there will be more features, possibly including teams, specialties, some form of investing coins,
+      and independent fighters that attack for you.
+    </p>
+  </div>
+
+{% endblock %}

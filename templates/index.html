@@ -1,0 +1,19 @@
+{% extends "layoutmainpages.html" %}
+
+{% block title %}
+    Main Page
+{% endblock %}
+
+{% block body %}
+    <h1>
+        <a href="/games">Play</a>
+    </h1>
+    <h1>
+        <a href="/about">About</a>
+    </h1>
+    {% if current_user.is_authenticated %}
+        <h1>
+            <a href="/account">Account</a>
+        </h1>
+    {% endif %}
+{% endblock %}

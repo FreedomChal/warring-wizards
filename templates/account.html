@@ -1,0 +1,50 @@
+{% extends "layoutmainpages.html" %}
+
+{% block title %}
+    Account
+{% endblock %}
+
+{% block body %}
+    <h1>
+        Account Information
+    </h1>
+    <div class="padded-section">
+        <div>
+            <h2>
+                Username:
+            </h2>
+            <div>
+                {{ current_user.get_username() }}
+            </div>
+        </div>
+        <div class="padded-section">
+            <h2>
+                Previous games:
+            </h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Timestamp</th>
+                        <th scope="col">Outcome</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for game in previous_games %}
+                    <tr>
+                        <td>
+                            {{ game.timestamp }}
+                        </td>
+                        <td>
+                            {% if game.is_alive %}
+                                Win
+                            {% else %}
+                                Loss
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

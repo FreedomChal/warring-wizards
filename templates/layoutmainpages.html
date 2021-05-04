@@ -1,0 +1,42 @@
+{% extends "parentlayout.html" %}
+
+{% block headers %}
+    <title>
+        Warring Wizards: {% block title %}{% endblock %}
+    </title>
+{% endblock %}
+
+{% block parent_body %}
+    <body class="standard_body">
+        <div class="navbar top_bar">
+            <div class="nav navbar-nav navbar-brand navbar-center game_title">
+                <a href="/">
+                    Warring Wizards
+                </a>
+            </div>
+
+                <div class="nav navbar-nav">
+
+                </div>
+                {% if current_user.is_authenticated == True %}
+                    <div class="nav navbar-nav ml-auto justify-content-end login_bar">
+                        You are logged in as: {{ current_user.get_username() }}
+                        <form action="/logout">
+                            <input class="btn btn-outline-dark btn-sm" type="submit" value="Logout">
+                        </form>
+                    </div>
+                {% else %}
+                    <div class="nav navbar-nav ml-auto justify-content-end login_bar">
+                        You are not logged in
+                        <form action="/login">
+                            <input class="btn btn-outline-dark btn-sm" type="submit" value="Login">
+                        </form>
+                    </div>
+                {% endif %}
+        </div>
+        <div class="standard_main_body">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </body>
+{% endblock %}

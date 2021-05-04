@@ -1,0 +1,2 @@
+ALTER TABLE users
+ADD COLUMN can_create_games INTEGER DEFAULT 0;

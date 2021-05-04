@@ -1,0 +1,118 @@
+{% extends "layoutmainpages.html" %}
+
+{% block title %}
+    Game
+{% endblock %}
+{% block body %}
+    <div class="centered" id="main_body">
+        {% if current_player.get_is_alive() %}
+            <script type="text/javascript" charset="utf-8">
+                on_load_game({{ game_id }});
+            </script>
+            <h1>
+                Wizards, Fight!
+            </h1>
+            <h4 id="level_display">
+                Level: {{ current_player.get_level() }}
+            </h4>
+            <div>
+                <div id="hp_max_hp_display">
+                    {{ current_player.get_display_hp() }} / {{ current_player.get_display_max_hp() }}
+                </div>
+                <div>
+                    <progress class="w3-round" id="health" value="{{ (current_player.get_display_hp() / current_player.get_display_max_hp()) * 100 }}" max="100"></progress>
+                </div>
+            </div>
+            <div class='parent flex-parent'>
+                <div class='child flex-child'>
+                    <br>
+                    <div>
+                        <div>
+                            <div>
+                                <div id="coins_display">
+                                    Coins: {{ current_player.get_display_coins() }}
+                                </div>
+                                <div id="energy_display">
+                                    Energy: {{ current_player.get_display_energy() }}
+                                </div>
+                            </div>
+                            <br>
+                            <div>
+                                <div id="heal_display">
+                                    Healing Rate: {{ current_player.get_display_heal() }} Units Per Minute
+                                </div>
+                                <div id="armor_display">
+                                    Armor: {{ current_player.get_display_armor() }}
+                                </div>
+                                <div id="attack_display">
+                                    Attack Strength: {{ current_player.get_display_attack() }}
+                                </div>
+                                <div id="income_display">
+                                    Income: {{ current_player.get_display_income() }} Coins Per Minute
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='child flex-child'>
+                    <form>
+                        <div>
+                            <input type="number" name="upgrade_amount" placeholder="Upgrade Amount" id="upgrade_amount">
+                        </div>
+                    </form>
+                    <div>
+                        <button onclick="upgrade('max_hp')">Upgrade Max HP</button>
+                    </div>
+                    <div>
+                        <button onclick="upgrade('heal')">Upgrade Healing</button>
+                    </div>
+                    <div>
+                        <button onclick="upgrade('armor')">Upgrade Armor</button>
+                    </div>
+                    <div>
+                        <button onclick="upgrade('attack')">Upgrade Attack</button>
+                    </div>
+                    <div>
+                        <button onclick="upgrade('income')">Upgrade Income</button>
+                    </div>
+                </div>
+            </div>
+            <h2>
+                Attack Players
+            </h2>
+            <div>
+                {% for player in players if player.get_id() != current_player.get_id() %}
+                    {% if player.get_is_alive() %}
+                        <div>
+                            <div id="player_{{ player.get_id() }}">
+                                Name: {{ player.user.get_username() }},
+                                Level: {{ player.get_level() }}
+                                HP: {{ player.get_effective_hp() }}
+                            </div>
+                            <div id="player_{{ player.get_id() }}_attack_button">
+                                <button onclick="attack({{ game_id }}, {{ player.get_id() }})">Attack</button>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div>
+                            <div id="player_{{ player.get_id() }}" class="death_message">
+                                {{ player.user.get_username() }} is Dead
+                            </div>
+                            <div id="player_{{ player.get_id() }}_attack_button">
+
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <br><br>
+            <div>
+                Your game ID is: {{ game_id }}
+            </div>
+        {% else %}
+            <h2>
+                You died! Better luck next time
+            </h2>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "layoutauthenticationpages.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block body %}
+    <h1>
+        Register
+    </h1>
+    <form action="/register", method="post">
+        <div class="form-section">
+            <div>
+                <input autocomplete="off" autofocus name="username" placeholder="Username" type="text" required>
+            </div>
+            <div>
+                <input autocomplete="off" name="password" placeholder="Password" type="password" required>
+            </div>
+            <div>
+                <input autocomplete="off" name="confirm_password" placeholder="Confirm Password" type="password" required>
+            </div>
+        </div>
+        <div class="form-section">
+            <div>
+                <input class="btn btn-primary" type="submit" value="Register">
+            </div>
+        </div>
+    </form>
+    <div>
+        Already have an account? <a href="/login">Login</a>
+    </div>
+{% endblock %}

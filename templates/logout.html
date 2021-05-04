@@ -1,0 +1,12 @@
+{% extends "layoutauthenticationpages.html" %}
+
+{% block title %}
+  <title>Logout</title>
+{% endblock %}
+
+{% block body %}
+  <h1>Logout</h1>
+
+  <form action="/logout" method="post" >
+    <input class="btn btn-primary" type="submit" value="Logout">
+{% endblock %}
