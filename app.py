@@ -17,7 +17,7 @@ from Player import Player
 from Game import Game, get_previous_games
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = b'Ie92[.w|c1D~1xG7*c))W;a<'
+app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
 socketio = SocketIO(app)
 
 login_manager = LoginManager()
