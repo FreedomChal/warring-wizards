@@ -1,13 +1,13 @@
 {% extends "layoutmainpages.html" %}
 
 {% block title %}
-    <title>
-        Waiting Room
-    </title>
+    Waiting Room
+{% endblock %}
+{% block other_headers %}
     <script type="text/javascript" charset="utf-8">
         on_load_into_waiting_room({{ game_id }});
     </script>
-{% endblock %}
+{% endblock%}
 {% block body %}
     <div class="centered">
         <div>

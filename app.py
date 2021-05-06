@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, send_from_directory
 import os
 import sys
-from flask_session import Session
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 
@@ -31,13 +30,9 @@ login_manager.init_app(app)
 if __name__ == '__main__':
     socketio.run(app)
 
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
-
 @login_manager.user_loader
 def load_user(user_id):
-    return get_user_by_id(user_id, is_authenticated = session.get("is_authenticated"))
+    return get_user_by_id(user_id, is_authenticated = True)
 
 @app.errorhandler(404)
 def not_found(error):
@@ -72,7 +67,7 @@ def favicon():
 
 @app.route("/register", methods = ["GET"])
 def register():
-    if not session.get("is_authenticated"):
+    if not current_user.is_authenticated:
         return render_template("register.html", invalid = request.args.get("invalid"))
     else:
         return redirect("/logout")
@@ -95,17 +90,13 @@ def register2():
 
             login_user(new_user, remember=True)
 
-            session["is_authenticated"] = True
-            session["user_id"] = user_id
-            session["username"] = username
-
             return redirect("/")
         else:
             return redirect("/register?invalid=1")
 
 @app.route("/login", methods = ["GET"])
 def login():
-    if not session.get("is_authenticated"):
+    if not current_user.is_authenticated:
         return render_template("login.html", invalid = request.args.get("invalid"))
     else:
         return redirect("/logout")
@@ -124,10 +115,6 @@ def login2():
 
         user_id = user.get_id()
 
-        session["is_authenticated"] = True
-        session["user_id"] = user_id
-        session["username"] = username
-
         return redirect("/")
 
     else:
@@ -140,7 +127,6 @@ def logout():
 @app.route("/logout", methods = ["POST"])
 def logout2():
     logout_user()
-    session.clear()
     return redirect("/")
 
 
@@ -185,7 +171,7 @@ def waiting_room():
 
     game_id = request.args.get("game_id")
 
-    return render_template("waiting_room.html", game_id = game_id, is_logged_in = session.get("is_authenticated"))
+    return render_template("waiting_room.html", game_id = game_id)
 
 @app.route("/game", methods = ["GET"])
 @login_required
