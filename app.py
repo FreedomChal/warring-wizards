@@ -10,11 +10,16 @@ DIRECTORY = os.path.dirname(os.path.realpath(__file__))
 # Include application directories in the path to allow imports
 sys.path.insert(1, DIRECTORY + "/static/entities/")
 sys.path.insert(1, DIRECTORY + "/static/")
+sys.path.insert(1, DIRECTORY + "/static/database/repositories/")
 
 from helpers import *
-from User import User, get_user_by_id
+from User import User
 from Player import Player
-from Game import Game, get_previous_games
+from Game import Game
+
+from GameRepository import *
+from PlayerRepository import *
+from UserRepository import *
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'testing_mode')
