@@ -39,7 +39,7 @@ def get_player_by_id(id):
 class Player:
 
     # Initialize a Player instance, set variables
-    def __init__(self, user = None, game = None, id = None, user_id = None, game_id = None):
+    def __init__(self, user = None, game = None, id = None):
 
         self.is_alive = True
         self.user = user
@@ -50,31 +50,14 @@ class Player:
 
         self.id = id
         self.set_attributes()
-        self.set_user(user_id = user_id)
-        self.set_game(game_id = game_id)
 
         self.timestamp = None
 
         self.is_archived = False
 
-
-    def set_user(self, user_id):
-        if not user_id == None:
-            user = User(id = user_id)
-            self.user = user
-
-        else:
-            self.user = self.get_user()
-
-    def set_game(self, game_id):
-        if not game_id == None:
-            game = Game.Game(id = game_id)
-            self.game = game
-
-        else:
-            self.game = self.get_game()
-
     def set_attributes(self, stats = {}):
+
+        self.id = stats.get("id", self.id)
         self.hp = stats.get("hp", STARTING_HP)
         self.max_hp = stats.get("max_hp", STARTING_MAX_HP)
         self.heal = stats.get("heal", STARTING_HEAL)
@@ -105,7 +88,7 @@ class Player:
             return True
 
     def get_username(self):
-        return self.user.get_username()
+        return self.get_user().get_username()
 
     def get_user_id(self):
 

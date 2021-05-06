@@ -88,11 +88,11 @@ class PlayerConnection:
                 energy_acceleration=?,
                 is_alive=?,
                 is_archived=?
-                WHERE user_id=? AND game_id=?;''',
+                WHERE id=?;''',
                 (self.player.hp, self.player.max_hp, self.player.heal,
                 self.player.armor, self.player.attack, self.player.income, self.player.coins, self.player.energy,
                 self.player.energy_increase, self.player.energy_acceleration, int(self.player.is_alive),
-                self.player.is_archived, self.player.get_user_id(), self.player.get_game_id()))
+                self.player.is_archived, self.player.get_id()))
 
             return True
 
@@ -116,6 +116,15 @@ class PlayerConnection:
             row = cursor.fetchone()
 
             return row[0]
+
+    def get_player_data_by_user_and_game(self, user, game):
+        with self.connection() as cursor:
+
+            cursor.execute('''SELECT * FROM players WHERE user_id=? AND game_id=?;''', (user.get_id(), game.get_id()))
+
+            row = cursor.fetchone()
+
+            return convert_to_dict_player(row)
 
     def get_user_id(self):
         with self.connection() as cursor:

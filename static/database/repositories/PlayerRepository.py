@@ -21,3 +21,14 @@ def get_player_objects(game):
     _ = [players[i].set_attributes(all_player_dicts[i]) for i in range(len(players))]
 
     return players
+
+def get_player_by_user_and_game(user, game):
+
+    player_data = PlayerConnection().get_player_data_by_user_and_game(user = user, game = game)
+
+    player = Player()
+    player.set_attributes(player_data)
+    player.user = user
+    player.game = game
+
+    return player
