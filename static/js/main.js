@@ -60,7 +60,7 @@ function manage_game_started() {
 }
 
 function manage_updates() {
-    updates = setInterval(get_update, 1000);
+    updates = setInterval(get_update, 250);
 }
 
 function get_has_game_started() {

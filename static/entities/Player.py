@@ -299,13 +299,13 @@ class Player:
         return round(self.max_hp, 1)
 
     def get_display_heal(self):
-        return self.heal
+        return round(self.heal, 1)
 
     def get_display_armor(self):
-        return self.armor
+        return round(self.armor, 1)
 
     def get_display_attack(self):
-        return self.attack
+        return round(self.attack, 1)
 
     def get_display_income(self):
         return int(self.income)
