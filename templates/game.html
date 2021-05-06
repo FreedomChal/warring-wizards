@@ -9,9 +9,6 @@
             <script type="text/javascript" charset="utf-8">
                 on_load_game({{ game_id }});
             </script>
-            <h1>
-                Wizards, Fight!
-            </h1>
             <h4 id="level_display">
                 Level: {{ current_player.get_level() }}
             </h4>
@@ -20,7 +17,7 @@
                     {{ current_player.get_display_hp() }} / {{ current_player.get_display_max_hp() }}
                 </div>
                 <div>
-                    <progress class="w3-round" id="health" value="{{ (current_player.get_display_hp() / current_player.get_display_max_hp()) * 100 }}" max="100"></progress>
+                    <progress class="w3-round" id="health" value="{{ (current_player.hp / current_player.max_hp) * 100 }}" max="100"></progress>
                 </div>
             </div>
             <div class='parent flex-parent'>

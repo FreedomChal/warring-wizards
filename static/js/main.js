@@ -72,7 +72,7 @@ function get_update() {
 }
 
 function update(message) {
-    update_hp_display(message["hp"], message["max_hp"]);
+    update_hp_display(message["hp"], message["max_hp"], message["true_hp"], message["true_max_hp"]);
     update_heal_display(message["heal"]);
     update_armor_display(message["armor"]);
     update_attack_display(message["attack"]);
@@ -100,14 +100,14 @@ function update_level_display(new_level) {
     levelElement.textContent = "Level: " + String(new_level);
 }
 
-function update_hp_display(new_hp, max_hp) {
+function update_hp_display(new_hp, max_hp, true_hp, true_max_hp) {
     let hpElement = document.getElementById('hp_max_hp_display');
 
-    hpElement.textContent = String(Math.round(new_hp)) + " / " + String(Math.round(max_hp));
+    hpElement.textContent = String(new_hp) + " / " + String(max_hp);
 
     let healthBar = document.getElementById('health');
 
-    healthBar.value = (new_hp / max_hp) * 100
+    healthBar.value = (true_hp / true_max_hp) * 100
 }
 
 function update_heal_display(new_heal) {

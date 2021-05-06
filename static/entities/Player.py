@@ -302,10 +302,10 @@ class Player:
         return int(self.hp)
 
     def get_display_hp(self):
-        return self.hp
+        return int(self.hp)
 
     def get_display_max_hp(self):
-        return self.max_hp
+        return int(self.max_hp)
 
     def get_display_heal(self):
         return self.heal
@@ -323,13 +323,15 @@ class Player:
         return int(self.coins)
 
     def get_display_energy(self):
-        return self.energy
+        return round(self.energy, 2)
 
     def get_display_data(self):
         stats = {}
 
         stats['hp'] = self.get_display_hp()
+        stats['true_hp'] = self.hp
         stats['max_hp'] = self.get_display_max_hp()
+        stats['true_max_hp'] = self.get_display_max_hp()
         stats['heal'] = self.get_display_heal()
         stats['armor'] = self.get_display_armor()
         stats['attack'] = self.get_display_attack()
