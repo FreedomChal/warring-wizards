@@ -12,7 +12,7 @@ from PlayerConnection import PlayerConnection
 from User import User
 import Game # Used instead of from Game import Game to prevent cyclic imports
 
-from Upgrader import Upgrader
+from Upgrader import *
 
 # Constants related to game balancing
 STARTING_HP = 10.0
@@ -26,15 +26,6 @@ STARTING_ENERGY_ACCELERATION = 0.05
 
 STARTING_COINS = 0.0
 STARTING_ENERGY = 0.0
-
-UPGRADE_COST = 5.0
-
-HP_UPGRADE_AMOUNT = 0.0
-MAX_HP_UPGRADE_AMOUNT = 5.0
-HEAL_UPGRADE_AMOUNT = 0.2
-ARMOR_UPGRADE_AMOUNT = 0.5
-ATTACK_UPGRADE_AMOUNT = 0.5
-INCOME_UPGRADE_AMOUNT = 1.0
 
 def get_player_by_id(id):
     player = Player(id = id)
@@ -299,13 +290,13 @@ class Player:
 
 
     def get_effective_hp(self):
-        return int(self.hp)
+        return round(self.hp, 1)
 
     def get_display_hp(self):
-        return int(self.hp)
+        return round(self.hp, 1)
 
     def get_display_max_hp(self):
-        return int(self.max_hp)
+        return round(self.max_hp, 1)
 
     def get_display_heal(self):
         return self.heal
