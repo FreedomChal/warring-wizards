@@ -9,27 +9,39 @@
         Available Games
     </h1>
     <div class="centered">
-        {% for game in games %}
-            <h3>
-                Joinable Game
-            </h3>
-            <div>
-                <div>
-                    Host: {{ game.game_creator.get_username() }}
-                </div>
-                <div>
-                    Available Slots: {{ game.available_slots }}
-                </div>
-            </div>
-            <div>
-                <form method="post">
-                    <div>
-                        <input type="hidden" name="game_id" value="{{ game.id }}" />
-                        <input type="submit" value="Join Game">
-                    </div>
-                </form>
-            </div>
-        {% endfor %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        Host
+                    </th>
+                    <th scope="col">
+                        Available Slots
+                    </th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for game in games %}
+                <tr>
+                    <td>
+                        {{ game.game_creator.get_username() }}
+                    </td>
+                    <td>
+                        {{ game.available_slots }}
+                    </td>
+                    <td>
+                        <form method="post">
+                            <div>
+                                <input type="hidden" name="game_id" value="{{ game.id }}" />
+                                <input type="submit" value="Join Game">
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
         <div>
             {% if current_user.get_can_create_games() == True %}
                 <h2>
