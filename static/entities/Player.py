@@ -5,7 +5,7 @@ from datetime import datetime
 ROOT_DIRECTORY = os.path.dirname(os.path.realpath(__file__)) + "/../../"
 
 # Include application directories in the path to allow imports
-sys.path.insert(1, ROOT_DIRECTORY + "/static/database//connections/")
+sys.path.insert(1, ROOT_DIRECTORY + "/static/database/connections/")
 sys.path.insert(1, ROOT_DIRECTORY + "/static/entity_interaction/player/")
 
 from PlayerConnection import PlayerConnection
@@ -26,14 +26,6 @@ STARTING_ENERGY_ACCELERATION = 0.05
 
 STARTING_COINS = 0.0
 STARTING_ENERGY = 0.0
-
-def get_player_by_id(id):
-    player = Player(id = id)
-
-    if player.get_attributes_by_id():
-        return player
-    else:
-        return None
 
 # Class used to define and interact with players
 class Player:
@@ -79,7 +71,7 @@ class Player:
 
     def get_attributes_by_id(self):
 
-        attributes = self.connection.get_attributes_by_id()
+        attributes = self.connection.get_stats()
 
         if attributes == None:
             return False

@@ -273,11 +273,11 @@ def player_event_attack(json):
 
     victim_id = json['victim_id']
 
-    victim = Player(id = victim_id)
+    victim = get_player_by_id(victim_id)
 
     current_game = Game(id = game_id)
 
-    current_player = Player(user = current_user, game = current_game)
+    current_player = get_player_by_user_and_game(user = current_user, game = current_game)
 
     current_player.get_stats()
 
@@ -297,7 +297,7 @@ def player_event_upgrade(json):
 
     current_game = Game(id = game_id)
 
-    current_player = Player(user = current_user, game = current_game)
+    current_player = get_player_by_user_and_game(user = current_user, game = current_game)
 
     current_player.upgrade(upgrade_type, upgrade_amount)
 

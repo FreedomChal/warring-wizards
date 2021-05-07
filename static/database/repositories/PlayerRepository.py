@@ -32,3 +32,11 @@ def get_player_by_user_and_game(user, game):
     player.game = game
 
     return player
+
+def get_player_by_id(id):
+    player = Player(id = id)
+
+    if player.get_attributes_by_id():
+        return player
+    else:
+        return None

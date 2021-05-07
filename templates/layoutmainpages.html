@@ -10,32 +10,39 @@
 
 {% block parent_body %}
     <body class="standard_body">
-        <div class="navbar top_bar">
-            <div class="nav navbar-nav navbar-brand navbar-center game_title">
+        <nav class="navbar top_bar">
+            <div class="navbar-nav navbar-links navbar-section">
+                <div class="navbar-nav navbar-link">
+                    <a class="nav-link" href="/games">Play</a>
+                </div>
+                <div class="navbar-nav navbar-link">
+                    <a class="nav-link" href="/about">About</a>
+                </div>
+            </div>
+            <div class="nav navbar-nav navbar-brand navbar-center game_title nav-item">
                 <a href="/">
                     Warring Wizards
                 </a>
             </div>
-
-                <div class="nav navbar-nav">
-
+            {% if current_user.is_authenticated == True %}
+            <div class="nav navbar-nav ml-auto justify-content-end login_bar nav-item navbar-section">
+                Welcome, {{ current_user.get_username() }}!
+                <div class="login-links">
+                    <a class=" nav-link login-item" href="/account">Account</a>
+                    <form action="/logout" class="login-item">
+                        <input class="btn btn-outline-dark btn-sm" type="submit" value="Logout">
+                    </form>
                 </div>
-                {% if current_user.is_authenticated == True %}
-                    <div class="nav navbar-nav ml-auto justify-content-end login_bar">
-                        You are logged in as: {{ current_user.get_username() }}
-                        <form action="/logout">
-                            <input class="btn btn-outline-dark btn-sm" type="submit" value="Logout">
-                        </form>
-                    </div>
-                {% else %}
-                    <div class="nav navbar-nav ml-auto justify-content-end login_bar">
-                        You are not logged in
-                        <form action="/login">
-                            <input class="btn btn-outline-dark btn-sm" type="submit" value="Login">
-                        </form>
-                    </div>
-                {% endif %}
-        </div>
+            </div>
+            {% else %}
+            <div class="nav navbar-nav ml-auto justify-content-end login_bar nav-item navbar-section">
+                You are not logged in
+                <form action="/login">
+                    <input class="btn btn-outline-dark btn-sm" type="submit" value="Login">
+                </form>
+            </div>
+            {% endif %}
+        </nav>
         <div class="standard_main_body">
             {% block body %}
             {% endblock %}

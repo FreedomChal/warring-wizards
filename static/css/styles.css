@@ -66,6 +66,8 @@ progress[value]::-webkit-progress-value
 
 .top_bar
 {
+    flex-wrap: nowrap;
+    justify-content: space-between;
     padding-left: 8px;
     padding-right: 8px;
     position: sticky;
@@ -134,12 +136,6 @@ progress[value]::-webkit-progress-value
   color: blue;
 }
 
-.navbar-nav.navbar-center {
-    position: absolute;
-    left: 50%;
-    transform: translatex(-50%);
-}
-
 .form-section
 {
     padding: 2px;
@@ -148,4 +144,37 @@ progress[value]::-webkit-progress-value
 .padded-section
 {
     padding: 10px;
+}
+
+.navbar-section
+{
+    width: 250px;
+}
+
+.navbar-links
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.navbar-link
+{
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 25px;
+    display: flex;
+}
+
+.login-links
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.login-item
+{
+    padding-left: 5px;
+    padding-right: 5px;
 }
