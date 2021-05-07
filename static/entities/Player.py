@@ -119,6 +119,9 @@ class Player:
     def get_is_alive(self):
         return self.is_alive
 
+    def get_is_archived(self):
+        return self.is_archived
+
     def get_stats(self):
 
         stats = self.connection.get_stats()
@@ -306,6 +309,7 @@ class Player:
         stats['energy'] = self.get_display_energy()
         stats['level'] = self.get_level()
         stats['is_alive'] = self.get_is_alive()
+        stats['is_archived'] = self.get_is_archived()
 
         return stats
 

@@ -81,10 +81,22 @@ function update(message) {
     update_energy_display(message["energy"]);
     update_level_display(message["level"]);
     update_is_alive(message["is_alive"]);
+    update_is_archived(message["is_archived"]);
 }
 
 function update_is_alive(new_is_alive) {
     if (!new_is_alive) {
+
+        window.location.reload()
+
+        clearInterval(updates)
+
+        socket.close()
+    }
+}
+
+function update_is_archived(new_is_archived) {
+    if (new_is_archived) {
 
         window.location.reload()
 

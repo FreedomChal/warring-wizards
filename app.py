@@ -186,9 +186,7 @@ def game():
     if not current_game.get_has_started():
         return forbidden(None)
 
-    current_player = Player(user = current_user, game = current_game)
-
-    current_player.get_stats()
+    current_player = get_player_by_user_and_game(user = current_user, game = current_game)
 
     current_player.update_timestamp_to_now_if_unchanged()
 
@@ -230,9 +228,10 @@ def create_game2():
 
     new_game = Game(game_creator = current_user, available_slots = number_of_slots, wait_time = waiting_time)
 
-    new_game.create()
-
-    return redirect("/")
+    if new_game.create():
+        return redirect("/")
+    else:
+        return redirect("/create_game?invalid=1")
 
 
 
@@ -278,8 +277,6 @@ def player_event_attack(json):
     current_game = Game(id = game_id)
 
     current_player = get_player_by_user_and_game(user = current_user, game = current_game)
-
-    current_player.get_stats()
 
     current_player.attack_player(victim)
 
