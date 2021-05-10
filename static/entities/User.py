@@ -8,14 +8,6 @@ sys.path.insert(1, ROOT_DIRECTORY + "/static/database/connections/")
 
 from UserConnection import UserConnection
 
-def get_user_by_id(id, is_authenticated = False):
-    user = User(id = id, is_authenticated = is_authenticated)
-
-    if user.get_attributes_by_id():
-        return user
-    else:
-        return None
-
 class User:
 
     def __init__(self, username = None, password = None, id = None, is_authenticated = False):

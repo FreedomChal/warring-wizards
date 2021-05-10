@@ -33,6 +33,13 @@ class GameConnection:
 
         return True
 
+    def delete_game_and_players(self):
+        with self.connection() as cursor:
+            cursor.execute('''DELETE FROM players WHERE game_id=?;''', (self.game.get_id(), ))
+            cursor.execute('''DELETE FROM games WHERE id=?;''', (self.game.get_id(), ))
+
+        return True
+
     def is_duplicate_game(self):
 
         with self.connection() as cursor:
@@ -152,3 +159,18 @@ class GameConnection:
             games = [convert_to_dict(row, ["game_id", "is_alive", "timestamp"]) for row in rows]
 
             return games
+
+    def get_game_by_host(self, host):
+
+        with self.connection() as cursor:
+
+            cursor.execute('''SELECT * FROM games WHERE user_id=? AND is_archived=0;''', (host.get_id(), ))
+
+            row = cursor.fetchone()
+
+            if row:
+                game = convert_to_dict_game(row)
+
+                return game
+            else:
+                return None

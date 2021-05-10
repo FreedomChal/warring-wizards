@@ -34,7 +34,7 @@
                         <form method="post">
                             <div>
                                 <input type="hidden" name="game_id" value="{{ game.id }}" />
-                                <input type="submit" value="Join Game">
+                                <input type="submit" value="Join Game"/>
                             </div>
                         </form>
                     </td>
@@ -44,9 +44,21 @@
         </table>
         <div>
             {% if current_user.get_can_create_games() == True %}
+                {% if hosted_game %}
+                <h3>
+                    You already have a game running
+                </h3>
+                <form method="post">
+                    <div>
+                        <input type="hidden" name="delete_hosted_game" value="1"/>
+                        <input type="submit" value="Delete Game"/>
+                    </div>
+                </form>
+                {% else %}
                 <h2>
                     <a href="/create_game">Create Game</a>
                 </h2>
+                {% endif %}
             {% else %}
                 <h3>
                     You do not have permission to create games

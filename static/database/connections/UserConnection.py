@@ -2,14 +2,14 @@ import sys
 import os
 import bcrypt
 import sqlite3
-from Connection import Connection
+from Connection import Connection, convert_to_dict
 
 # Note: This constant MUST be changed if the players table is modified.
 COLUMNS = ("id", "username", "password_hash", "is_administrator", "can_create_games")
 
 def convert_to_dict_user(column_values):
 
-    user_dict = {COLUMNS[i]: column_values[i] for i in range(len(COLUMNS))}
+    user_dict = convert_to_dict(column_values, COLUMNS)
 
     return user_dict
 

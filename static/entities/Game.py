@@ -17,9 +17,6 @@ DEFAULT_GAME_WAIT_TIME = 300 # The default length of time players have to join t
 MIN_GAME_WAIT_TIME = 60 # The minimum length of time players have to join the game, measured in seconds.
 MAX_GAME_WAIT_TIME = 1500 # The maximum length of time players have to join the game, measured in seconds.
 
-def get_previous_games(current_user):
-    return GameConnection().get_previous_games(current_user.get_id())
-
 class Game:
 
     def __init__(self, id = None, game_creator = None, available_slots = 0, timestamp = None, wait_time = DEFAULT_GAME_WAIT_TIME):
@@ -32,6 +29,8 @@ class Game:
         self.available_slots = available_slots
         self.timestamp = timestamp
         self.wait_time = self.format_wait_time(wait_time)
+
+        self.is_archived = None
 
     def format_wait_time(self, wait_time):
         if wait_time < MIN_GAME_WAIT_TIME:
@@ -50,6 +49,10 @@ class Game:
         is_valid_new_game = self.connection.create_game()
 
         return is_valid_new_game
+
+    def delete(self):
+
+        self.connection.delete_game_and_players()
 
     def get_attributes(self):
 

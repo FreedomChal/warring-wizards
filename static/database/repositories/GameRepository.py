@@ -20,3 +20,15 @@ def get_game_objects(joinable = False):
     display_games = [Game(id = game["id"], game_creator = User(id = game["user_id"]), available_slots = game["available_slots"]) for game in all_games]
 
     return display_games
+
+def get_game_by_host(host):
+
+    hosted_game_attributes = GameConnection().get_game_by_host(host)
+
+    if not hosted_game_attributes:
+        return None
+    else:
+        hosted_game = Game()
+        hosted_game.set_attributes(hosted_game_attributes)
+
+        return hosted_game

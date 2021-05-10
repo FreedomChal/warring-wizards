@@ -145,25 +145,35 @@ def games():
 
     games = get_game_objects(joinable = True)
 
+    hosted_game = get_game_by_host(current_user)
+
     can_create_games = current_user.get_can_create_games()
 
-    return render_template("games.html", games = games)
+    return render_template("games.html", games = games, hosted_game = hosted_game)
 
 @app.route("/games", methods = ["POST"])
 @login_required
 def games2():
 
-    game_id = request.form.get("game_id")
+    if request.form.get("delete_hosted_game"):
 
-    current_game = Game(id = game_id)
+        hosted_game = get_game_by_host(current_user)
 
-    joining_successful = current_game.attempt_to_join(current_user)
-
-    if joining_successful:
-        return redirect("/waiting_room?game_id=" + game_id);
-
-    else:
+        hosted_game.delete()
+        
         return redirect("/games");
+    else:
+
+        game_id = request.form.get("game_id")
+
+        current_game = Game(id = game_id)
+
+        joining_successful = current_game.attempt_to_join(current_user)
+
+        if joining_successful:
+            return redirect("/waiting_room?game_id=" + game_id);
+        else:
+            return redirect("/games");
 
 @app.route("/waiting_room", methods = ["GET"])
 @login_required

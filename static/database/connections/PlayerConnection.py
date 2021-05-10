@@ -2,7 +2,7 @@ import sys
 import os
 import sqlite3
 from datetime import datetime
-from Connection import Connection
+from Connection import Connection, convert_to_dict
 
 # Note: This constant MUST be changed if the players table is modified.
 COLUMNS = ("id", "user_id", "game_id", "hp", "max_hp", "heal", "armor", "attack",
@@ -10,7 +10,7 @@ COLUMNS = ("id", "user_id", "game_id", "hp", "max_hp", "heal", "armor", "attack"
 
 def convert_to_dict_player(column_values):
 
-    player_dict = {COLUMNS[i]: column_values[i] for i in range(len(COLUMNS))}
+    player_dict = convert_to_dict(column_values, COLUMNS)
 
     return player_dict
 
