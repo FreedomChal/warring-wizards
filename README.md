@@ -13,7 +13,7 @@ Before the application can run, the necessary dependencies in requirements.txt m
 
 Once the requirements are satisfied, execute "flask run" in the warring-wizards main directory from a terminal. The app will then run at http://localhost:5000/.
 
-Note that this app cannot be run in CS50 IDE, due to conflictions with the flask-socketio library.
+Note that this app cannot be run in CS50 IDE, due to conflicts with the flask-socketio library.
 
 See a video showcasing this project at https://www.youtube.com/watch?v=1qEKnyrXgQQ
 
