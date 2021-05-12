@@ -8,7 +8,7 @@ The underlying functionality of Warring Wizards is primarily based on three enti
 * Game stores information about games, such as whether the game is running and its available slots.
 * Player stores information about in-game players. It stores stats such as health, and also references both its User and the Game it is in.
 
-Most functionality in the app is based on these three entities. Each one also has sub-entities such as Repositories, which are used to get entities from the database.
+Most functionality in the app is based on these three entities. Each one also has sub-entities such as Upgraders for Players, as well as other files containing functions for interactivity with entities, such as Repositories, which are used to get entities from the database.
 
 Regarding Users, each user has permissions. Currently, there are two permissions: can_create_games and is_administrator. Both of these default to false, and can only be changed by manually changing the database.
 Players for which can_create_games is false are not allowed to create games.
@@ -25,4 +25,4 @@ The game itself uses the flask-socketio library. Each game has its own room, cor
 
 ## Reasons behind design
 
-Broadly, the design was made to be very categorized, with code distributed over many files. I did so to make the app more understandable, and also so that new features are easy to add without changing other things. My earler code was distributed over fewer files, and had somewhat inefficient functionality. While I eliminated most long, complicated sections of code, there are still some. Also, some of the earlier low-level design that was complicated and inefficient still remains. Over the space of the project, I made decisions I thought were best at the time, but I rethought some of those decisions later on as the project came together. As a whole though, I think the project is well designed, and most of the early problems have been resolved.
+Broadly, the design was made to be very categorized, with code distributed over many files. I did so to make the app more understandable, and also so that new features are easy to add without changing already existing code. When making changes, I only need to focus on a couple files, and the rest just continue to work unaffected. My earler code was distributed over fewer files, and had somewhat inefficient functionality. While I eliminated most long, complicated sections of code, there are still some. Also, some of the earlier low-level design that was complicated and inefficient still remains. Over the space of the project, I made decisions I thought were best at the time, but I rethought some of those decisions later on as the project came together. As a whole though, I think the project is well designed, and most of the early problems have been resolved.
