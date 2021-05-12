@@ -14,9 +14,15 @@ Regarding Users, each user has permissions. Currently, there are two permissions
 Players for which can_create_games is false are not allowed to create games.
 is_administrator currently doesn't do anything.
 
+## Game functionality
+
 The game itself uses the flask-socketio library. Each game has its own room, corresponding to the game id, which is used for managing comminication in a single game. The updates sent through sockets from client to server are:
 
 * A request for update. The server will then get the stats of the current player from the database, as well as the timestamp of when the player was last updated. The server will then calculate the difference between the current timestamp and the timestamp from the last update, and grow the player's stats accordingly. The server will then update the database, and send stat data back to the client, as well as to all other players in the game so that they can see the player's health and level.
 * A message to attack. When the player attacks another player, it will tell the server what player the are attacking. The server will then get the stats of both players, and inflict damage on the victim based on the attacker's energy and strength, as well as deplete the attacker's energy. If the victim has nonpositive health, they are then set to dead, and an update is sent to the client. If the victim is killed, the server will check if the game is done, and if it is, it will archive the game and notify the winner that they have won.
 * A message to upgrade. When upgrading a stat, the stat to be upgraded and the amount to upgrade will be sent to the server. If the amount is negative, the server will ignore the update. If the amount is valid, the server will get the player's stats from the database, and then upgrade the desired stat by the amount specified. If the specified amount is more than the player can afford, it will upgrade by the highest amount the player can afford.
 * In the waiting room, the client will periodically check if the game has started. When the client checks, the server will both check whether the game has no more player slots and whether the waiting time has passed. If either are true, it will notify all clients in the game that the game has started, and all players will be redirected to their game.
+
+## Reasons behind design
+
+Broadly, the design was made to be very categorized, with code distributed over many files. I did so to make the app more understandable, and also so that new features are easy to add without changing other things. My earler code was distributed over fewer files, and had somewhat inefficient functionality. While I eliminated most long, complicated sections of code, there are still some. Also, some of the earlier low-level design that was complicated and inefficient still remains. Over the space of the project, I made decisions I thought were best at the time, but I rethought some of those decisions later on as the project came together. As a whole though, I think the project is well designed, and most of the early problems have been resolved.
