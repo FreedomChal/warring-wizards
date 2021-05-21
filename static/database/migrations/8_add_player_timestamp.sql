@@ -2,8 +2,8 @@ DROP table players;
 
 CREATE TABLE players (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	user_id REAL,
-	game_id REAL,
+	user_id INTEGER,
+	game_id INTEGER,
 	hp REAL,
 	max_hp REAL,
 	heal REAL,
