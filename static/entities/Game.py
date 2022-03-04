@@ -1,6 +1,6 @@
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 
 ROOT_DIRECTORY = os.path.dirname(os.path.realpath(__file__)) + "/../../"
 
@@ -92,9 +92,11 @@ class Game:
         if self.connection.get_is_joinable() == False:
             return True
 
-        current_timestamp = datetime.now()
+        current_timestamp = datetime.now(timezone.utc)
 
-        self_timestamp = datetime.fromisoformat(self.get_timestamp())
+        self_timestamp = self.get_timestamp()
+
+        print(self_timestamp, current_timestamp)
 
         difference = current_timestamp - self_timestamp
 

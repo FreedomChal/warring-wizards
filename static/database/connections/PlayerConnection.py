@@ -92,7 +92,7 @@ class PlayerConnection:
                 (self.player.hp, self.player.max_hp, self.player.heal,
                 self.player.armor, self.player.attack, self.player.income, self.player.coins, self.player.energy,
                 self.player.energy_increase, self.player.energy_acceleration, int(self.player.is_alive),
-                self.player.is_archived, self.player.get_id()))
+                int(self.player.is_archived), self.player.get_id()))
 
             return True
 

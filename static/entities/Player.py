@@ -1,6 +1,6 @@
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 
 ROOT_DIRECTORY = os.path.dirname(os.path.realpath(__file__)) + "/../../"
 
@@ -197,9 +197,9 @@ class Player:
     def update_stats(self):
         self.get_stats()
 
-        current_timestamp = datetime.now()
+        current_timestamp = datetime.now(timezone.utc)
 
-        self_timestamp = datetime.fromisoformat(self.timestamp)
+        self_timestamp = self.timestamp
 
         difference =  current_timestamp - self_timestamp
 
@@ -218,7 +218,7 @@ class Player:
 
         if self.energy_increase == STARTING_ENERGY_INCREASE:
 
-            current_timestamp = datetime.now()
+            current_timestamp = datetime.now(timezone.utc)
 
             self.timestamp = current_timestamp.isoformat(sep = ' ', timespec = 'seconds')
 
