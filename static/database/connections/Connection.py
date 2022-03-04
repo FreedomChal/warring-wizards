@@ -1,8 +1,9 @@
 import sys
 import os
-import sqlite3
+import psycopg2
 
 ROOT_DIRECTORY = os.path.dirname(os.path.realpath(__file__)) + "/../../../"
+DATABASE_URL = os.environ.get(‘DATABASE_URL’)
 
 def convert_to_dict(column_values, columns):
 
@@ -11,11 +12,11 @@ def convert_to_dict(column_values, columns):
     return dict
 
 class Connection:
-    def __init__(self, database = ROOT_DIRECTORY + "database.db"):
+    def __init__(self, database = DATABASE_URL):
         self.database = database
 
     def connect(self):
-        self.connection = sqlite3.connect(self.database)
+        self.connection = psycopg2.connect(self.database)
         self.cursor = self.connection.cursor()
 
         return self.cursor
