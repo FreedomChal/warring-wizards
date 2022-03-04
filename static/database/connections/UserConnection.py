@@ -1,7 +1,7 @@
 import sys
 import os
 import bcrypt
-import sqlite3
+import psycopg2
 from Connection import Connection, convert_to_dict
 
 # Note: This constant MUST be changed if the players table is modified.
@@ -27,14 +27,14 @@ class UserConnection:
         password_hash = self.hash_password(self.user.password)
 
         with self.connection() as cursor:
-            cursor.execute('''INSERT INTO users (username, password_hash) VALUES(?, ?);''', (self.user.username, password_hash))
+            cursor.execute('''INSERT INTO users (username, password_hash) VALUES(%s, %s);''', (self.user.username, password_hash))
 
         return True
 
     def is_duplicate_user(self, username):
 
         with self.connection() as cursor:
-            cursor.execute('''SELECT COUNT(*) FROM users WHERE username=?;''', (username, ))
+            cursor.execute('''SELECT COUNT(*) FROM users WHERE username=%s;''', (username, ))
 
             row = cursor.fetchone()
 
@@ -46,7 +46,7 @@ class UserConnection:
     def get_attributes_by_id(self):
 
         with self.connection() as cursor:
-            cursor.execute('''SELECT * FROM users WHERE id=?;''', (self.user.get_id(), ))
+            cursor.execute('''SELECT * FROM users WHERE id=%s;''', (self.user.get_id(), ))
 
             row = cursor.fetchone()
 
@@ -63,7 +63,7 @@ class UserConnection:
 
     def verify_password(self):
         with self.connection() as cursor:
-            cursor.execute('''SELECT * FROM users WHERE username=?;''', (self.user.username, ))
+            cursor.execute('''SELECT * FROM users WHERE username=%s;''', (self.user.username, ))
 
             rows = cursor.fetchall()
 
@@ -74,7 +74,7 @@ class UserConnection:
 
             correct_password_hash = user_info_dict["password_hash"]
 
-            if (bcrypt.checkpw(self.user.password.encode('utf8'), correct_password_hash)):
+            if (bcrypt.checkpw(self.user.password.encode('utf8'), correct_password_hash.encode("utf-8"))):
 
                 self.user.set_attributes(user_info_dict)
 
@@ -84,7 +84,7 @@ class UserConnection:
 
     def get_user_id(self):
         with self.connection() as cursor:
-            cursor.execute('''SELECT id FROM users WHERE username=?;''', (self.user.username, ))
+            cursor.execute('''SELECT id FROM users WHERE username=%s;''', (self.user.username, ))
 
             row = cursor.fetchone()
 
@@ -92,7 +92,7 @@ class UserConnection:
 
     def get_user_username(self):
         with self.connection() as cursor:
-            cursor.execute('''SELECT username FROM users WHERE id=?;''', (self.user.id, ))
+            cursor.execute('''SELECT username FROM users WHERE id=%s;''', (self.user.id, ))
 
             row = cursor.fetchone()
 
@@ -100,7 +100,7 @@ class UserConnection:
 
     def get_can_create_games(self):
         with self.connection() as cursor:
-            cursor.execute('''SELECT can_create_games FROM users WHERE id=?;''', (self.user.id, ))
+            cursor.execute('''SELECT can_create_games FROM users WHERE id=%s;''', (self.user.id, ))
 
             row = cursor.fetchone()
 
@@ -108,7 +108,7 @@ class UserConnection:
 
     def get_is_administrator(self):
         with self.connection() as cursor:
-            cursor.execute('''SELECT is_administrator FROM users WHERE id=?;''', (self.user.id, ))
+            cursor.execute('''SELECT is_administrator FROM users WHERE id=%s;''', (self.user.id, ))
 
             row = cursor.fetchone()
 

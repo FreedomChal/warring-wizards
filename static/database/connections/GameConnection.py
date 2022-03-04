@@ -1,6 +1,6 @@
 import sys
 import os
-import sqlite3
+import psycopg2
 from datetime import datetime
 from Connection import Connection, convert_to_dict
 
