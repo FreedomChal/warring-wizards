@@ -57,9 +57,9 @@ class UserConnection:
 
     def hash_password(self, password):
 
-        password_hash = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt())
+        password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-        return password_hash
+        return (password_hash.decode('utf-8'))
 
     def verify_password(self):
         with self.connection() as cursor:
@@ -74,7 +74,7 @@ class UserConnection:
 
             correct_password_hash = user_info_dict["password_hash"]
 
-            if (bcrypt.checkpw(self.user.password.encode('utf8'), correct_password_hash.encode("utf-8"))):
+            if (bcrypt.checkpw(self.user.password.encode('utf-8'), correct_password_hash.encode('utf-8'))):
 
                 self.user.set_attributes(user_info_dict)
 

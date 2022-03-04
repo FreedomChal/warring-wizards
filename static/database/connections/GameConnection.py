@@ -29,14 +29,14 @@ class GameConnection:
         current_timestamp = datetime.now().isoformat(sep = ' ', timespec = 'seconds')
 
         with self.connection() as cursor:
-            cursor.execute('''INSERT INTO games (user_id, can_join, available_slots, timestamp, wait_time) VALUES(?, ?, ?, ?, ?);''', (self.game.game_creator.id, 1, self.game.available_slots, current_timestamp, self.game.wait_time))
+            cursor.execute('''INSERT INTO games (user_id, can_join, available_slots, timestamp, wait_time) VALUES(%s, %s, %s, %s, %s);''', (self.game.game_creator.id, 1, self.game.available_slots, current_timestamp, self.game.wait_time))
 
         return True
 
     def delete_game_and_players(self):
         with self.connection() as cursor:
-            cursor.execute('''DELETE FROM players WHERE game_id=?;''', (self.game.get_id(), ))
-            cursor.execute('''DELETE FROM games WHERE id=?;''', (self.game.get_id(), ))
+            cursor.execute('''DELETE FROM players WHERE game_id=%s;''', (self.game.get_id(), ))
+            cursor.execute('''DELETE FROM games WHERE id=%s;''', (self.game.get_id(), ))
 
         return True
 
@@ -45,7 +45,7 @@ class GameConnection:
         with self.connection() as cursor:
             user_id = self.game.game_creator.get_id()
 
-            cursor.execute('''SELECT COUNT(*) FROM games WHERE user_id=? AND is_archived=0;''', (user_id, ))
+            cursor.execute('''SELECT COUNT(*) FROM games WHERE user_id=%s AND is_archived=0;''', (user_id, ))
 
             row = cursor.fetchone()
 
@@ -58,14 +58,14 @@ class GameConnection:
 
         if self.game.id:
             with self.connection() as cursor:
-                cursor.execute('''SELECT * FROM games WHERE id=?;''', (self.game.get_id(), ))
+                cursor.execute('''SELECT * FROM games WHERE id=%s;''', (self.game.get_id(), ))
 
                 row = cursor.fetchone()
 
                 return row[0]
         else:
             with self.connection() as cursor:
-                cursor.execute('''SELECT * FROM games WHERE user_id=?;''', (self.game.get_creator_id(), ))
+                cursor.execute('''SELECT * FROM games WHERE user_id=%s;''', (self.game.get_creator_id(), ))
 
                 row = cursor.fetchone()
 
@@ -76,7 +76,7 @@ class GameConnection:
         user_id = self.game.get_creator_id()
 
         with self.connection() as cursor:
-            cursor.execute('''SELECT id FROM games WHERE user_id=?;''', (user_id, ))
+            cursor.execute('''SELECT id FROM games WHERE user_id=%s;''', (user_id, ))
 
             row = cursor.fetchone()
 
@@ -87,7 +87,7 @@ class GameConnection:
         id = self.game.get_id()
 
         with self.connection() as cursor:
-            cursor.execute('''SELECT timestamp FROM games WHERE id=?;''', (id, ))
+            cursor.execute('''SELECT timestamp FROM games WHERE id=%s;''', (id, ))
 
             row = cursor.fetchone()
 
@@ -96,7 +96,7 @@ class GameConnection:
     def get_available_game_slots(self):
 
         with self.connection() as cursor:
-            cursor.execute('''SELECT available_slots FROM games WHERE id=?;''', (self.game.id, ))
+            cursor.execute('''SELECT available_slots FROM games WHERE id=%s;''', (self.game.id, ))
 
             row = cursor.fetchone()
 
@@ -105,7 +105,7 @@ class GameConnection:
     def take_game_slot(self):
 
         with self.connection() as cursor:
-            cursor.execute('''UPDATE games SET available_slots = available_slots - 1 WHERE id = ?;''', (self.game.id, ))
+            cursor.execute('''UPDATE games SET available_slots = available_slots - 1 WHERE id = %s;''', (self.game.id, ))
 
         if self.get_available_game_slots() <= 0:
             self.update_is_joinable()
@@ -118,7 +118,7 @@ class GameConnection:
 
         with self.connection() as cursor:
 
-            cursor.execute('''SELECT can_join FROM games WHERE id=?;''', (self.game.id, ))
+            cursor.execute('''SELECT can_join FROM games WHERE id=%s;''', (self.game.id, ))
 
             row = cursor.fetchone()
 
@@ -126,11 +126,11 @@ class GameConnection:
 
     def set_unjoinable(self):
         with self.connection() as cursor:
-            cursor.execute('''UPDATE games SET can_join = 0 WHERE id=?;''', (self.game.id, ))
+            cursor.execute('''UPDATE games SET can_join = 0 WHERE id=%s;''', (self.game.id, ))
 
     def set_archived(self):
         with self.connection() as cursor:
-            cursor.execute('''UPDATE games SET is_archived = 1 WHERE id=?;''', (self.game.id, ))
+            cursor.execute('''UPDATE games SET is_archived = 1 WHERE id=%s;''', (self.game.id, ))
 
     def get_all_games(self, joinable = False):
 
@@ -152,7 +152,7 @@ class GameConnection:
 
         with self.connection() as cursor:
 
-            cursor.execute('''SELECT games.id, players.is_alive, games.timestamp FROM games JOIN players ON players.game_id=games.id WHERE players.user_id=? AND players.is_archived=1;''', (user_id, ))
+            cursor.execute('''SELECT games.id, players.is_alive, games.timestamp FROM games JOIN players ON players.game_id=games.id WHERE players.user_id=%s AND players.is_archived=1;''', (user_id, ))
 
             rows = cursor.fetchall()
 
@@ -164,7 +164,7 @@ class GameConnection:
 
         with self.connection() as cursor:
 
-            cursor.execute('''SELECT * FROM games WHERE user_id=? AND is_archived=0;''', (host.get_id(), ))
+            cursor.execute('''SELECT * FROM games WHERE user_id=%s AND is_archived=0;''', (host.get_id(), ))
 
             row = cursor.fetchone()
 

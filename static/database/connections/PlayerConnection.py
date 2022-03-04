@@ -29,7 +29,7 @@ class PlayerConnection:
             with self.connection() as cursor:
                 cursor.execute('''INSERT INTO players
                     (user_id, game_id, hp, max_hp, heal, armor, attack, income, coins, energy, energy_increase, energy_acceleration, timestamp)
-                    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);''',
+                    VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);''',
                     (self.player.get_user_id(), self.player.get_game_id(), self.player.hp, self.player.max_hp, self.player.heal,
                     self.player.armor, self.player.attack, self.player.income, self.player.coins, self.player.energy,
                     self.player.energy_increase, self.player.energy_acceleration, current_timestamp))
@@ -52,19 +52,19 @@ class PlayerConnection:
 
         with self.connection() as cursor:
             cursor.execute('''UPDATE players SET
-                hp=?,
-                max_hp=?,
-                heal=?,
-                armor=?,
-                attack=?,
-                income=?,
-                coins=?,
-                energy=?,
-                energy_increase=?,
-                energy_acceleration=?,
-                timestamp=?,
-                is_alive=?
-                WHERE user_id=? AND game_id=?;''',
+                hp=%s,
+                max_hp=%s,
+                heal=%s,
+                armor=%s,
+                attack=%s,
+                income=%s,
+                coins=%s,
+                energy=%s,
+                energy_increase=%s,
+                energy_acceleration=%s,
+                timestamp=%s,
+                is_alive=%s
+                WHERE user_id=%s AND game_id=%s;''',
                 (self.player.hp, self.player.max_hp, self.player.heal,
                 self.player.armor, self.player.attack, self.player.income, self.player.coins, self.player.energy,
                 self.player.energy_increase, self.player.energy_acceleration, self.player.timestamp, self.player.is_alive,
@@ -76,19 +76,19 @@ class PlayerConnection:
 
         with self.connection() as cursor:
             cursor.execute('''UPDATE players SET
-                hp=?,
-                max_hp=?,
-                heal=?,
-                armor=?,
-                attack=?,
-                income=?,
-                coins=?,
-                energy=?,
-                energy_increase=?,
-                energy_acceleration=?,
-                is_alive=?,
-                is_archived=?
-                WHERE id=?;''',
+                hp=%s,
+                max_hp=%s,
+                heal=%s,
+                armor=%s,
+                attack=%s,
+                income=%s,
+                coins=%s,
+                energy=%s,
+                energy_increase=%s,
+                energy_acceleration=%s,
+                is_alive=%s,
+                is_archived=%s
+                WHERE id=%s;''',
                 (self.player.hp, self.player.max_hp, self.player.heal,
                 self.player.armor, self.player.attack, self.player.income, self.player.coins, self.player.energy,
                 self.player.energy_increase, self.player.energy_acceleration, int(self.player.is_alive),
@@ -99,7 +99,7 @@ class PlayerConnection:
     def is_duplicate_player(self):
 
         with self.connection() as cursor:
-            cursor.execute('''SELECT COUNT(*) FROM players WHERE user_id=? AND is_archived=0;''', (self.player.get_user_id(), ))
+            cursor.execute('''SELECT COUNT(*) FROM players WHERE user_id=%s AND is_archived=0;''', (self.player.get_user_id(), ))
 
             row = cursor.fetchone()
 
@@ -111,7 +111,7 @@ class PlayerConnection:
     def get_player_id(self):
         with self.connection() as cursor:
 
-            cursor.execute('''SELECT id FROM players WHERE user_id=? AND game_id=?;''', (self.player.user.get_id(), self.player.game.get_id()))
+            cursor.execute('''SELECT id FROM players WHERE user_id=%s AND game_id=%s;''', (self.player.user.get_id(), self.player.game.get_id()))
 
             row = cursor.fetchone()
 
@@ -120,7 +120,7 @@ class PlayerConnection:
     def get_player_data_by_user_and_game(self, user, game):
         with self.connection() as cursor:
 
-            cursor.execute('''SELECT * FROM players WHERE user_id=? AND game_id=?;''', (user.get_id(), game.get_id()))
+            cursor.execute('''SELECT * FROM players WHERE user_id=%s AND game_id=%s;''', (user.get_id(), game.get_id()))
 
             row = cursor.fetchone()
 
@@ -129,7 +129,7 @@ class PlayerConnection:
     def get_user_id(self):
         with self.connection() as cursor:
 
-            cursor.execute('''SELECT user_id FROM players WHERE id=?;''', (self.player.id, ))
+            cursor.execute('''SELECT user_id FROM players WHERE id=%s;''', (self.player.id, ))
 
             row = cursor.fetchone()
 
@@ -138,7 +138,7 @@ class PlayerConnection:
     def get_game_id(self):
         with self.connection() as cursor:
 
-            cursor.execute('''SELECT game_id FROM players WHERE id=?;''', (self.player.id, ))
+            cursor.execute('''SELECT game_id FROM players WHERE id=%s;''', (self.player.id, ))
 
             row = cursor.fetchone()
 
@@ -146,7 +146,7 @@ class PlayerConnection:
 
     def get_stats(self):
         with self.connection() as cursor:
-            cursor.execute('''SELECT * FROM players WHERE id=?;''', (self.player.get_id(), ))
+            cursor.execute('''SELECT * FROM players WHERE id=%s;''', (self.player.get_id(), ))
 
             row = cursor.fetchone()
 
@@ -157,7 +157,7 @@ class PlayerConnection:
     def get_all_players(self, game):
 
         with self.connection() as cursor:
-            cursor.execute('''SELECT * FROM players WHERE game_id=?;''', (game.get_id(), ))
+            cursor.execute('''SELECT * FROM players WHERE game_id=%s;''', (game.get_id(), ))
 
             rows = cursor.fetchall()
 
@@ -169,7 +169,7 @@ class PlayerConnection:
 
         with self.connection() as cursor:
 
-            cursor.execute('''SELECT * FROM players WHERE game_id=? AND is_alive=1;''', (game.get_id(), ))
+            cursor.execute('''SELECT * FROM players WHERE game_id=%s AND is_alive=1;''', (game.get_id(), ))
 
             rows = cursor.fetchall()
 
