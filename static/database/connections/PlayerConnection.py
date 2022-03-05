@@ -62,12 +62,11 @@ class PlayerConnection:
                 energy=%s,
                 energy_increase=%s,
                 energy_acceleration=%s,
-                timestamp=%s,
-                is_alive=%s
+                timestamp=%s
                 WHERE user_id=%s AND game_id=%s;''',
                 (self.player.hp, self.player.max_hp, self.player.heal,
                 self.player.armor, self.player.attack, self.player.income, self.player.coins, self.player.energy,
-                self.player.energy_increase, self.player.energy_acceleration, self.player.timestamp, self.player.is_alive,
+                self.player.energy_increase, self.player.energy_acceleration, self.player.timestamp,
                 self.player.get_user_id(), self.player.get_game_id()))
 
             return True
