@@ -27,6 +27,8 @@ STARTING_ENERGY_ACCELERATION = 0.05
 STARTING_COINS = 0.0
 STARTING_ENERGY = 0.0
 
+INCOME_WAIT = 45.0
+
 # Class used to define and interact with players
 class Player:
 
@@ -225,7 +227,7 @@ class Player:
             self.write(timestamp = True)
 
     def update_coins(self, seconds):
-        self.coins += self.income * (seconds / 60.0)
+        self.coins += self.income * (seconds / INCOME_WAIT)
 
     def update_energy(self, seconds):
         self.energy += self.energy_increase * (seconds / 60.0)
