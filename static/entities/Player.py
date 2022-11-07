@@ -288,7 +288,7 @@ class Player:
         return round(self.attack, 1)
 
     def get_display_income(self):
-        return int(self.income)
+        return round(self.income * (60.0/INCOME_WAIT), 1)
 
     def get_display_coins(self):
         return int(self.coins)
